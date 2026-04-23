@@ -341,6 +341,10 @@ const Room = () => {
             <CalledBalls drawn={room.drawn_balls} current={room.current_ball} />
           )}
 
+          {me && room.pattern === "indian" && room.status !== "waiting" && (
+            <BingoLetters linesCompleted={countCompletedLines(me.card, me.daubed)} />
+          )}
+
           {me && (
             <BingoCard
               card={me.card}
@@ -348,6 +352,7 @@ const Room = () => {
               drawn={room.drawn_balls}
               onDaub={(n) => daub(n)}
               diamondMode={diamondActive}
+              noFreeSpace={room.pattern === "indian"}
             />
           )}
 
