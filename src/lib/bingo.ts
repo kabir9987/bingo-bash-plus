@@ -39,7 +39,56 @@ export function columnFor(num: number): Column {
 }
 
 // Patterns
-export type Pattern = "line" | "x" | "blackout" | "corners";
+export type Pattern = "line" | "x" | "blackout" | "corners" | "indian";
+
+// Indian (Housie-style) card: 5x5 grid of 25 unique numbers from 1-75, no free space.
+// Stored in same shape as BingoCard (5 cols x 5 rows) so existing UI works.
+export function generateIndianCard(): BingoCard {
+  const pool: number[] = [];
+  for (let n = 1; n <= 75; n++) pool.push(n);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const picked = pool.slice(0, 25);
+  const card: BingoCard = [[], [], [], [], []];
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < 5; col++) {
+      card[col].push(picked[row * 5 + col]);
+    }
+  }
+  return card;
+}
+
+// Count completed lines (rows + cols + 2 diagonals) — used for Indian mode.
+// Each completed line crosses off one B-I-N-G-O letter; 5 letters = win.
+export function countCompletedLines(card: BingoCard, daubedNums: number[]): number {
+  const d = new Set(daubedNums);
+  const cell = (c: number, r: number) => {
+    const num = card[c][r];
+    if (num === 0) return true;
+    return d.has(num);
+  };
+  let lines = 0;
+  for (let r = 0; r < 5; r++) {
+    let ok = true;
+    for (let c = 0; c < 5; c++) if (!cell(c, r)) { ok = false; break; }
+    if (ok) lines++;
+  }
+  for (let c = 0; c < 5; c++) {
+    let ok = true;
+    for (let r = 0; r < 5; r++) if (!cell(c, r)) { ok = false; break; }
+    if (ok) lines++;
+  }
+  let d1 = true, d2 = true;
+  for (let i = 0; i < 5; i++) {
+    if (!cell(i, i)) d1 = false;
+    if (!cell(i, 4 - i)) d2 = false;
+  }
+  if (d1) lines++;
+  if (d2) lines++;
+  return lines;
+}
 
 function isDaubed(card: BingoCard, daubed: Set<number>, col: number, row: number) {
   const num = card[col][row];
