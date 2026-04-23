@@ -1,105 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Russo+One&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* Bingo Bash design system — Vibrant Vegas */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 270 60% 8%;
+    --foreground: 45 100% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 270 50% 12%;
+    --card-foreground: 45 100% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 270 55% 10%;
+    --popover-foreground: 45 100% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 100% 55%;          /* gold */
+    --primary-foreground: 270 60% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 320 90% 55%;         /* magenta */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 270 30% 20%;
+    --muted-foreground: 270 15% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 190 95% 55%;            /* cyan */
+    --accent-foreground: 270 60% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 90% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 270 40% 25%;
+    --input: 270 40% 22%;
+    --ring: 45 100% 55%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* brand */
+    --gold: 45 100% 55%;
+    --gold-glow: 50 100% 70%;
+    --magenta: 320 90% 55%;
+    --cyan: 190 95% 55%;
+    --royal: 270 70% 35%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* gradients */
+    --grad-hero: linear-gradient(135deg, hsl(270 70% 25%), hsl(320 80% 35%) 50%, hsl(190 90% 40%));
+    --grad-gold: linear-gradient(135deg, hsl(45 100% 60%), hsl(35 100% 50%));
+    --grad-card: linear-gradient(160deg, hsl(270 50% 16%), hsl(270 55% 10%));
+    --grad-ball-b: radial-gradient(circle at 30% 30%, hsl(0 90% 70%), hsl(0 90% 45%));
+    --grad-ball-i: radial-gradient(circle at 30% 30%, hsl(35 100% 65%), hsl(25 100% 50%));
+    --grad-ball-n: radial-gradient(circle at 30% 30%, hsl(120 70% 60%), hsl(140 80% 38%));
+    --grad-ball-g: radial-gradient(circle at 30% 30%, hsl(210 100% 70%), hsl(220 100% 50%));
+    --grad-ball-o: radial-gradient(circle at 30% 30%, hsl(290 80% 70%), hsl(290 80% 45%));
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* shadows */
+    --glow-gold: 0 0 30px hsl(45 100% 60% / 0.55), 0 0 60px hsl(45 100% 60% / 0.25);
+    --glow-magenta: 0 0 24px hsl(320 90% 60% / 0.55);
+    --glow-cyan: 0 0 24px hsl(190 95% 60% / 0.5);
+    --shadow-card: 0 20px 50px -20px hsl(270 80% 5% / 0.8);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 270 50% 10%;
+    --sidebar-foreground: 45 100% 95%;
+    --sidebar-primary: 45 100% 55%;
+    --sidebar-primary-foreground: 270 60% 10%;
+    --sidebar-accent: 270 30% 18%;
+    --sidebar-accent-foreground: 45 100% 95%;
+    --sidebar-border: 270 40% 25%;
+    --sidebar-ring: 45 100% 55%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
+  * { @apply border-border; }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-image:
+      radial-gradient(ellipse at top, hsl(270 70% 18%) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, hsl(320 60% 15%) 0%, transparent 50%),
+      linear-gradient(180deg, hsl(270 60% 7%), hsl(270 65% 5%));
+    min-height: 100vh;
   }
+  h1, h2, h3, .display { font-family: 'Russo One', 'Bungee', sans-serif; letter-spacing: 0.02em; }
+  .font-display { font-family: 'Russo One', sans-serif; }
+  .font-marquee { font-family: 'Bungee', cursive; }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glow-gold { box-shadow: var(--glow-gold); }
+  .glow-magenta { box-shadow: var(--glow-magenta); }
+  .glow-cyan { box-shadow: var(--glow-cyan); }
+  .surface-card {
+    background: var(--grad-card);
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+  }
+  .ball-b { background: var(--grad-ball-b); }
+  .ball-i { background: var(--grad-ball-i); }
+  .ball-n { background: var(--grad-ball-n); }
+  .ball-g { background: var(--grad-ball-g); }
+  .ball-o { background: var(--grad-ball-o); }
+  .ball-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .ball-shine::after {
+    content: '';
+    position: absolute;
+    inset: 8% 8% 50% 8%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 30% 20%, hsl(0 0% 100% / 0.55), transparent 60%);
+    pointer-events: none;
+  }
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.3) rotate(-20deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(45 100% 60% / 0.7), var(--glow-gold); }
+  50% { box-shadow: 0 0 0 16px hsl(45 100% 60% / 0); }
+}
+@keyframes float-ball {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes confetti-burst {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(120vh) rotate(720deg); opacity: 0; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-pop-in { animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.animate-pulse-gold { animation: pulse-gold 1.6s ease-in-out infinite; }
+.animate-float { animation: float-ball 3s ease-in-out infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, hsl(45 100% 70% / 0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
 }
