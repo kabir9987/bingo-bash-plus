@@ -100,6 +100,10 @@ export function checkWin(card: BingoCard, daubedNums: number[], pattern: Pattern
   const d = new Set(daubedNums);
   const cell = (c: number, r: number) => isDaubed(card, d, c, r);
 
+  if (pattern === "indian") {
+    return countCompletedLines(card, daubedNums) >= 5;
+  }
+
   if (pattern === "corners") {
     return cell(0, 0) && cell(4, 0) && cell(0, 4) && cell(4, 4);
   }
