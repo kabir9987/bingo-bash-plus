@@ -14,7 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bingo_players: {
+        Row: {
+          card: Json
+          daubed: number[]
+          has_won: boolean
+          id: string
+          is_host: boolean
+          joined_at: string
+          name: string
+          power_ups: Json
+          room_id: string
+        }
+        Insert: {
+          card: Json
+          daubed?: number[]
+          has_won?: boolean
+          id?: string
+          is_host?: boolean
+          joined_at?: string
+          name: string
+          power_ups?: Json
+          room_id: string
+        }
+        Update: {
+          card?: Json
+          daubed?: number[]
+          has_won?: boolean
+          id?: string
+          is_host?: boolean
+          joined_at?: string
+          name?: string
+          power_ups?: Json
+          room_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bingo_players_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "bingo_rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bingo_rooms: {
+        Row: {
+          code: string
+          created_at: string
+          current_ball: number | null
+          drawn_balls: number[]
+          host_name: string
+          id: string
+          pattern: string
+          status: string
+          updated_at: string
+          winner_name: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          current_ball?: number | null
+          drawn_balls?: number[]
+          host_name: string
+          id?: string
+          pattern?: string
+          status?: string
+          updated_at?: string
+          winner_name?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          current_ball?: number | null
+          drawn_balls?: number[]
+          host_name?: string
+          id?: string
+          pattern?: string
+          status?: string
+          updated_at?: string
+          winner_name?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
