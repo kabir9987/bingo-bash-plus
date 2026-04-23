@@ -316,6 +316,7 @@ const Room = () => {
                       <SelectItem value="corners">Four Corners</SelectItem>
                       <SelectItem value="x">X Pattern</SelectItem>
                       <SelectItem value="blackout">Blackout</SelectItem>
+                      <SelectItem value="indian">Indian Housie (5 Lines)</SelectItem>
                     </SelectContent>
                   </Select>
                   <Button
