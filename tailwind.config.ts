@@ -13,7 +13,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Russo One", "sans-serif"],
+        marquee: ["Bungee", "cursive"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+      },
       colors: {
+        gold: "hsl(var(--gold))",
+        "gold-glow": "hsl(var(--gold-glow))",
+        magenta: "hsl(var(--magenta))",
+        cyan: "hsl(var(--cyan))",
+        royal: "hsl(var(--royal))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
