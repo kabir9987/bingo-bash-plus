@@ -38,7 +38,7 @@ const Index = () => {
       .insert({
         room_id: room.id,
         name: name.trim(),
-        card: generateCard(),
+        card: generateCard() as never,
         is_host: true,
       })
       .select()
@@ -70,7 +70,7 @@ const Index = () => {
       .insert({
         room_id: room.id,
         name: name.trim(),
-        card: generateCard(),
+        card: generateCard() as never,
       })
       .select()
       .single();

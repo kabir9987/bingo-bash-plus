@@ -72,7 +72,7 @@ const Room = () => {
         .select()
         .eq("room_id", r.id)
         .order("joined_at");
-      setPlayers((ps || []) as Player[]);
+      setPlayers((ps || []) as unknown as Player[]);
     })();
     return () => { cancelled = true; };
   }, [code, navigate]);
@@ -92,9 +92,11 @@ const Room = () => {
         { event: "*", schema: "public", table: "bingo_players", filter: `room_id=eq.${room.id}` },
         (payload) => {
           setPlayers((prev) => {
-            if (payload.eventType === "INSERT") return [...prev, payload.new as Player];
-            if (payload.eventType === "DELETE") return prev.filter((p) => p.id !== (payload.old as Player).id);
-            return prev.map((p) => (p.id === (payload.new as Player).id ? (payload.new as Player) : p));
+            const newP = payload.new as unknown as Player;
+            const oldP = payload.old as unknown as Player;
+            if (payload.eventType === "INSERT") return [...prev, newP];
+            if (payload.eventType === "DELETE") return prev.filter((p) => p.id !== oldP.id);
+            return prev.map((p) => (p.id === newP.id ? newP : p));
           });
         })
       .subscribe();
@@ -197,14 +199,14 @@ const Room = () => {
   const usePower = async (key: keyof PowerUps) => {
     if (!me || !room || room.status !== "playing") return;
     if (me.power_ups[key] <= 0) return;
-    const newPU = { ...me.power_ups, [key]: me.power_ups[key] - 1 };
+    const newPU = { ...me.power_ups, [key]: me.power_ups[key] - 1 } as unknown as PowerUps;
 
     if (key === "instant") {
       // Auto-daub everything to win current pattern: simply mark all numbers from card
       const allNums = me.card.flat().filter((n) => n !== 0);
       await supabase
         .from("bingo_players")
-        .update({ daubed: allNums, has_won: true, power_ups: newPU })
+        .update({ daubed: allNums, has_won: true, power_ups: newPU as never })
         .eq("id", me.id);
       await supabase
         .from("bingo_rooms")
@@ -228,7 +230,7 @@ const Room = () => {
       setPeeked(peek);
       toast("Next 3 likely calls revealed", { icon: "👁️" });
     }
-    await supabase.from("bingo_players").update({ power_ups: newPU }).eq("id", me.id);
+    await supabase.from("bingo_players").update({ power_ups: newPU as never }).eq("id", me.id);
   };
 
   const leave = async () => {
