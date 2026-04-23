@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { BingoCard as TCard, Pattern, PowerUps, checkWin, nextBall } from "@/lib/bingo";
+import { BingoCard as TCard, Pattern, PowerUps, checkWin, nextBall, generateIndianCard, generateCard, countCompletedLines } from "@/lib/bingo";
 import { BingoCard } from "@/components/BingoCard";
+import { BingoLetters } from "@/components/BingoLetters";
 import { CalledBalls } from "@/components/CalledBalls";
 import { PowerUpBar } from "@/components/PowerUpBar";
 import { PlayerList } from "@/components/PlayerList";
@@ -149,12 +150,26 @@ const Room = () => {
       .from("bingo_rooms")
       .update({ status: "playing", pattern, drawn_balls: [], current_ball: null, winner_name: null })
       .eq("id", room.id);
-    // reset all players
-    await supabase
+    // reset all players — regenerate cards so the layout matches the chosen pattern
+    const { data: roster } = await supabase
       .from("bingo_players")
-      .update({ daubed: [], has_won: false })
+      .select("id")
       .eq("room_id", room.id);
-    toast.success("Game on!");
+    if (roster) {
+      await Promise.all(
+        roster.map((p) =>
+          supabase
+            .from("bingo_players")
+            .update({
+              daubed: [],
+              has_won: false,
+              card: (pattern === "indian" ? generateIndianCard() : generateCard()) as never,
+            })
+            .eq("id", p.id),
+        ),
+      );
+    }
+    toast.success(pattern === "indian" ? "Housie time! Strike all 5 letters." : "Game on!");
   };
 
   const newRound = async () => {
@@ -303,6 +318,7 @@ const Room = () => {
                       <SelectItem value="corners">Four Corners</SelectItem>
                       <SelectItem value="x">X Pattern</SelectItem>
                       <SelectItem value="blackout">Blackout</SelectItem>
+                      <SelectItem value="indian">Indian Classic (B-I-N-G-O)</SelectItem>
                     </SelectContent>
                   </Select>
                   <Button
@@ -325,6 +341,10 @@ const Room = () => {
             <CalledBalls drawn={room.drawn_balls} current={room.current_ball} />
           )}
 
+          {me && room.pattern === "indian" && room.status !== "waiting" && (
+            <BingoLetters linesCompleted={countCompletedLines(me.card, me.daubed)} />
+          )}
+
           {me && (
             <BingoCard
               card={me.card}
@@ -332,6 +352,7 @@ const Room = () => {
               drawn={room.drawn_balls}
               onDaub={(n) => daub(n)}
               diamondMode={diamondActive}
+              noFreeSpace={room.pattern === "indian"}
             />
           )}
 
