@@ -339,6 +339,44 @@ const Room = () => {
             <CalledBalls drawn={room.drawn_balls} current={room.current_ball} />
           )}
 
+          {me && room.pattern === "indian" && room.status !== "waiting" && (
+            <div className="surface-card rounded-3xl p-4">
+              <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3 text-center">
+                Housie Progress — Cross all 5 letters to win
+              </div>
+              <div className="flex justify-center gap-2 sm:gap-3">
+                {COLUMNS.map((c, i) => {
+                  const lines = countCompletedLines(me.card, me.daubed);
+                  const crossed = i < lines;
+                  return (
+                    <div
+                      key={c}
+                      className={cn(
+                        "relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-display text-2xl sm:text-3xl text-primary-foreground transition-all",
+                        i === 0 && "ball-b",
+                        i === 1 && "ball-i",
+                        i === 2 && "ball-n",
+                        i === 3 && "ball-g",
+                        i === 4 && "ball-o",
+                        crossed ? "glow-gold scale-105" : "opacity-50 grayscale",
+                      )}
+                    >
+                      {c}
+                      {crossed && (
+                        <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <span className="absolute w-[120%] h-1.5 bg-destructive rotate-[-20deg] rounded-full" />
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-3 text-center text-xs text-muted-foreground">
+                Each completed row, column or diagonal crosses one letter.
+              </div>
+            </div>
+          )}
+
           {me && (
             <BingoCard
               card={me.card}
