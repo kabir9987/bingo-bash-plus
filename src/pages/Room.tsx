@@ -150,11 +150,23 @@ const Room = () => {
       .from("bingo_rooms")
       .update({ status: "playing", pattern, drawn_balls: [], current_ball: null, winner_name: null })
       .eq("id", room.id);
-    // reset all players
-    await supabase
+    // Regenerate every player's card to match the chosen mode
+    const { data: ps } = await supabase
       .from("bingo_players")
-      .update({ daubed: [], has_won: false })
+      .select("id")
       .eq("room_id", room.id);
+    await Promise.all(
+      (ps || []).map((p) =>
+        supabase
+          .from("bingo_players")
+          .update({
+            daubed: [],
+            has_won: false,
+            card: (pattern === "indian" ? generateIndianCard() : generateCard()) as never,
+          })
+          .eq("id", p.id),
+      ),
+    );
     toast.success("Game on!");
   };
 
