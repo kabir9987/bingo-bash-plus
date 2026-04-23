@@ -8,10 +8,11 @@ interface Props {
   drawn: number[];
   onDaub: (num: number) => void;
   diamondMode?: boolean;
+  noFreeSpace?: boolean;
 }
 
-export const BingoCard = ({ card, daubed, drawn, onDaub, diamondMode }: Props) => {
-  const isDaubed = (n: number) => n === 0 || daubed.includes(n);
+export const BingoCard = ({ card, daubed, drawn, onDaub, diamondMode, noFreeSpace }: Props) => {
+  const isDaubed = (n: number) => (n === 0 && !noFreeSpace) || daubed.includes(n);
   const isCalled = (n: number) => drawn.includes(n);
 
   return (
@@ -37,7 +38,7 @@ export const BingoCard = ({ card, daubed, drawn, onDaub, diamondMode }: Props) =
         {Array.from({ length: 5 }).map((_, row) =>
           card.map((col, ci) => {
             const num = col[row];
-            const free = num === 0;
+            const free = num === 0 && !noFreeSpace;
             const daub = isDaubed(num);
             const called = isCalled(num);
             return (
