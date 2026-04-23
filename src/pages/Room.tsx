@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { BingoCard as TCard, Pattern, PowerUps, checkWin, nextBall } from "@/lib/bingo";
+import { BingoCard as TCard, Pattern, PowerUps, checkWin, nextBall, generateCard, generateIndianCard, countCompletedLines, COLUMNS } from "@/lib/bingo";
 import { BingoCard } from "@/components/BingoCard";
 import { CalledBalls } from "@/components/CalledBalls";
 import { PowerUpBar } from "@/components/PowerUpBar";
@@ -9,6 +9,7 @@ import { PlayerList } from "@/components/PlayerList";
 import { Confetti } from "@/components/Confetti";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { ArrowLeft, Copy, Play, RefreshCw, Trophy } from "lucide-react";
 
