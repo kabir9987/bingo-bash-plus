@@ -102,8 +102,8 @@ const Index = () => {
           </div>
         </div>
         <div className="hidden md:flex items-center gap-4 text-xs">
-          <span className="flex items-center gap-1.5 text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="flex items-center gap-1.5 text-gold">
+            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             {livePlayers} online
           </span>
           <span className="flex items-center gap-1.5 text-accent">
@@ -208,8 +208,8 @@ const Index = () => {
         </section>
 
         <div className="md:hidden mt-8 flex items-center justify-center gap-4 text-xs">
-          <span className="flex items-center gap-1.5 text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="flex items-center gap-1.5 text-gold">
+            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             {livePlayers} online
           </span>
           <span className="flex items-center gap-1.5 text-accent">
