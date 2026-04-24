@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { BingoBall } from "@/components/BingoBall";
 import { SpinWheel } from "@/components/SpinWheel";
-import { Sparkles, Users, Plus, LogIn, Crown, Activity, Globe2 } from "lucide-react";
+import { Sparkles, Plus, LogIn, Crown, Activity, Globe2, ShoppingBag } from "lucide-react";
 import hero from "@/assets/hero-bingo.jpg";
 
 const Index = () => {
