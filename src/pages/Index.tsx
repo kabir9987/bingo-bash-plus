@@ -101,17 +101,27 @@ const Index = () => {
             </p>
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-4 text-xs">
-          <span className="flex items-center gap-1.5 text-gold">
-            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            {livePlayers} online
-          </span>
-          <span className="flex items-center gap-1.5 text-accent">
-            <Activity className="w-3.5 h-3.5" /> {activeRooms} live rooms
-          </span>
-          <span className="flex items-center gap-1.5 text-muted-foreground">
-            <Globe2 className="w-3.5 h-3.5" /> Realtime worldwide
-          </span>
+        <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4 text-xs">
+            <span className="flex items-center gap-1.5 text-gold">
+              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+              {livePlayers} online
+            </span>
+            <span className="flex items-center gap-1.5 text-accent">
+              <Activity className="w-3.5 h-3.5" /> {activeRooms} live rooms
+            </span>
+            <span className="flex items-center gap-1.5 text-muted-foreground">
+              <Globe2 className="w-3.5 h-3.5" /> Realtime
+            </span>
+          </div>
+          <Button
+            onClick={() => navigate("/shop")}
+            variant="outline"
+            size="sm"
+            className="border-gold/40 text-gold hover:bg-gold/10 hover:text-gold"
+          >
+            <ShoppingBag className="w-4 h-4 mr-1.5" /> Card Shop
+          </Button>
         </div>
       </header>
 
